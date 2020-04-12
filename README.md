@@ -7,6 +7,6 @@
 
 原文链接：https://blog.csdn.net/qq236237606/article/details/105463706
 
-3、run_lcqmc_similarity.py 基于keras4bert
+3、run_lcqmc_similarity.py 基于keras4bert实现的文本分类
 
 原文链接：https://blog.csdn.net/qq236237606/article/details/105459358
