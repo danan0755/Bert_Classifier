@@ -1,3 +1,6 @@
 torch>=1.0
 argparse==1.1
 thop
+tensorflow==1.14.0
+keras==2.2.5
+kashgari==1.1.4
