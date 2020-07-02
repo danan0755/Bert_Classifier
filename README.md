@@ -25,3 +25,7 @@
 7.Bert_Predict.py requests调用tf serving中的bert模型
 
 原文链接：https://blog.csdn.net/qq236237606/article/details/107078898
+
+8.fastbert.py 基于fastbert实现文本分类
+
+原文链接：https://editor.csdn.net/md/?articleId=107079455
