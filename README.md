@@ -28,4 +28,4 @@
 
 8.fastbert.py 基于fastbert实现文本分类
 
-原文链接：https://editor.csdn.net/md/?articleId=107079455
+原文链接：https://blog.csdn.net/qq236237606/article/details/107079455
