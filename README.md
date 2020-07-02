@@ -18,7 +18,7 @@
 
 原文链接：https://blog.csdn.net/qq236237606/article/details/105470644
 
-6.Bert_Train.py  基于bert训练模型，并保保存为pb格式
+6.Bert_Train.py  基于bert训练模型，并保存为pb格式
 
 原文链接：https://blog.csdn.net/qq236237606/article/details/107078973
 
