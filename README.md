@@ -14,7 +14,7 @@
 
 原文链接：https://blog.csdn.net/qq236237606/article/details/105472534
 
-5、run_ChineseDailyNerCorpus.py 基于kashgari + bert实现的ner
+5、run_ChineseDailyNerCorpus.py 基于kashgari + bert/albert实现的ner
 
 原文链接：https://blog.csdn.net/qq236237606/article/details/105470644
 
