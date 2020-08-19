@@ -6,7 +6,7 @@
 
 原文链接：https://blog.csdn.net/qq236237606/article/details/105463706
 
-3、run_lcqmc_similarity.py 基于keras4bert实现的文本相似度计算
+3、run_lcqmc_similarity.py 基于bert4keras实现的文本相似度计算
 
 原文链接：https://blog.csdn.net/qq236237606/article/details/105459358
 
@@ -32,4 +32,4 @@
 
 9、uwsgi.py flask + uwsgi + keras部署深度学习模型预测接口
 
-原文链接：https://blog.csdn.net/qq236237606/article/details/108019291
+原文链接：https://blog.csdn.net/qq236237606/article/details/1080192911
