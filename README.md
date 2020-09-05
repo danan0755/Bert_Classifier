@@ -32,4 +32,4 @@
 
 9、uwsgi.py flask + uwsgi + keras部署深度学习模型预测接口
 
-原文链接：https://blog.csdn.net/qq236237606/article/details/1080192911
+原文链接：https://blog.csdn.net/qq236237606/article/details/108019291
