@@ -1,0 +1,134 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# author ChenYongSheng
+# date 20200803
+
+import json
+import time
+
+import arrow
+
+from ner.time_normalizer import TimeNormalizer
+
+"""时间识别接口"""
+
+
+# 时间实体识别接口  reg用来控制用户第一句话说的是早上，下午，晚上，默认为0，早上=-2，中午=-3，下午晚上=-4
+def time_ner(query, tagid=None, userid=None, reg=None, ner_date=None, ner_time=None):
+    start = time.time()
+
+    # 获取当前时间
+    now = int(time.time())
+    timeArray = time.localtime(now)
+    now = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
+
+    tn = TimeNormalizer()
+    timeBase = arrow.now()
+    reg_send = 0
+    t_date = ner_date
+    t_time = ner_time
+
+    res = tn.parse(target=query, timeBase=timeBase)
+    res = json.loads(res)
+    if 'timestamp' in res:
+        timestamp = res['timestamp']
+        sp = str(timestamp).split(' ')
+        # 包含日期和时间
+        if len(sp) > 1:
+            t_date = sp[0]
+            t_time = sp[1]
+            t_time = check_t_time(res, t_time, now)
+        elif 'timetype' in res:
+            # 只有日期，没有时间
+            t_date = sp[0]
+            reg_send = res['timetype']
+    elif 'timespan' in res:
+        timespan = res['timespan'][0]
+        sp = str(timespan).split(' ')
+        if len(sp) > 1:
+            t_date = sp[0]
+            t_time = sp[1]
+            t_time = check_t_time(res, t_time, now)
+        elif 'timetype' in res:
+            t_date = sp[0]
+            reg_send = res['timetype']
+    else:
+        return 'null'
+
+    # 根据缓存的信息，判断时间是否需要加12小时
+    if t_time and reg == -4:
+        hour, minute, second = split_time(t_time)
+        hour = int(hour) + 12
+        if hour > 24:
+            t_time = ''
+        else:
+            t_time = str(hour) + ":" + minute + ":" + second
+
+    if t_date or t_time:
+        end = time.time()
+        consume = int((end - start) * 1000)
+        output = {
+            "query": query,
+            "tagid": tagid,
+            "userid": userid,
+            "ner_date": t_date,
+            "ner_time": t_time,
+            "reg": reg_send,
+            "time": consume,
+            "result": 1
+        }
+    else:
+        output = 'null'
+    return output
+
+
+# 时间切割
+def split_time(time):
+    tmp_time = str(time).split(":")
+    hour = tmp_time[0]
+    minute = tmp_time[1]
+    second = tmp_time[2]
+    return hour, minute, second
+
+
+''' 1、对于用户说：今天8点 ，应识别出08:00和20:00，取值逻辑如下：
+    
+    如当前时间为7点，小于用户所说的8点，则取值08:00；
+
+    如当前时间为15点，大于用户所说的8点，小于8+12点，则取值20:00；
+
+    如当前时间为21点，大于用户所说的8点，大于8+12点，视为该时间已过期，不做取值；'''
+
+'''2、对于用户说0点和24点，不做取值，在time_unit.py处理了24点为0点'''
+
+'''3、当用户说了时段&24小时制，如早上18:00，按照24小时制取值即可，应取18:00；在time_normalizer.py处理了'''
+
+
+def check_t_time(res, t_time, now):
+    if 'timestamp' in res:
+        res = res['timestamp']
+    elif 'timespan' in res:
+        res = res['timespan'][0]
+    reg_hour, reg_minute, reg_second = split_time(t_time)
+
+    now_time = str(now).split(" ")[1]
+    now_hour, _, _ = split_time(now_time)
+    if reg_hour == '00':
+        t_time = ''
+    elif now <= res:
+        t_time = t_time
+    elif now > res:
+        reg_hour = int(reg_hour) + 12
+        if int(now_hour) > reg_hour:
+            t_time = ''
+        else:
+            t_time = str(reg_hour) + ":" + reg_minute + ":" + reg_second
+    return t_time
+
+
+if __name__ == '__main__':
+    # 输入小时数小于等于当前小时数，日期自动加一天，如现在是2020-08-04 10点，输入“10点”，输出结果为2020-08-05 10：00：00
+    query = '24点'
+    res = time_ner(query)
+    print(res)
