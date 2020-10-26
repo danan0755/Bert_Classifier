@@ -6,6 +6,7 @@ from bert4keras.snippets import sequence_padding, DataGenerator
 from keras.layers import Dropout, Dense
 import tensorflow as tf
 import csv
+import numpy as np
 
 set_gelu('tanh')  # 切换gelu版本
 
