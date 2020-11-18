@@ -6,6 +6,7 @@ from bert4keras.snippets import sequence_padding, DataGenerator
 from keras.layers import Dropout, Dense
 import tensorflow as tf
 import csv
+import numpy as np
 
 set_gelu('tanh')  # 切换gelu版本
 
@@ -122,4 +123,17 @@ model.fit_generator(
 
 model.load_weights('best_model.weights')
 print(u'final test acc: %05f\n' % (evaluate(test_generator)))
+
+# 测试单条数据  
+student_answer = '需要判断市场震荡幅度'
+standard_answer = '市场震荡幅度'
+lines = []
+lines.append((student_answer, standard_answer, None))
+test_D = data_generator(lines, batch_size)
+ 
+results = model.predict_generator(test_D.__iter__(), steps=len(test_D), verbose=1)
+max_score = max(results[0])
+print(max_score)
+label = np.argwhere(results[0] == max_score)[0][0]
+print(label)
 
