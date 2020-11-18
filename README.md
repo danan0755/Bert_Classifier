@@ -36,8 +36,7 @@
 
 10、时间实体识别：time_ner
 
-11、text_similarity.py   
-tfidf和lsi文本相似度算法
+11、text_similarity.py：  tfidf和lsi文本相似度算法
 
 12、keyextract_textrank.py
 关键词抽取，没抽取到的句子切词作为关键词
