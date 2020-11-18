@@ -33,3 +33,9 @@
 9、uwsgi.py flask + uwsgi + keras部署深度学习模型预测接口
 
 原文链接：https://blog.csdn.net/qq236237606/article/details/108019291
+
+10、text_similarity.py   
+tfidf和lsi文本相似度算法
+
+11、keyextract_textrank.py
+关键词抽取，没抽取到的句子切词作为关键词
