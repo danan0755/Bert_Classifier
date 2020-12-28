@@ -26,3 +26,20 @@ embedding = BERTEmbedding('bert/chinese_L-12_H-768_A-12',
                           sequence_length=100)
 model = BiLSTM_Model(embedding)
 model.fit(train_x, train_y, valid_x, valid_y, epochs=5)
+model.save('model/bilstm_ner')
+
+query1 = [['不', '要', '朝', '北', '的', '房', '子']]
+model = kashgari.utils.load_model('model/bilstm_ner')
+res = model.predict_entities(query1)
+
+def process_query(query):
+    features = []
+    lines_list = []
+    for char in query:
+        lines_list.append(char)
+    features.append(lines_list)
+    return features
+
+query2 = '两房带电梯400万左右有吗？'
+features = process_query(query2)
+res = model.predict_entities(features)
