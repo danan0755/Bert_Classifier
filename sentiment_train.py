@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# author ChenYongSheng
-# date 20210514
 import pandas as pd
 import numpy as np
 import jieba
