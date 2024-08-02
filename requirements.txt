@@ -2,5 +2,5 @@ torch>=1.0
 argparse==1.1
 thop
 tf==1.14.0
-keras==2.2.5
+keras==2.13.1
 kashgari==1.1.4
